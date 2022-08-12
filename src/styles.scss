@@ -1,1 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
+$header-color: #c5e9ff;
+$main-color: #c5e9ff95;
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.global_header {
+  height: 10%;
+  background-color: $header-color;
+  box-shadow: 0 5px 20px #1d1d1d;
+  h1 {
+    padding: 0;
+    margin: 0;
+  }
+}
