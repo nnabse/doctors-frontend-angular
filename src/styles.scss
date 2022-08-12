@@ -1,6 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-$header-color: #c5e9ff;
-$main-color: #c5e9ff95;
+@import "src/variables.scss";
 
 html,
 body {
