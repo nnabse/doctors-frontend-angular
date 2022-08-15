@@ -11,7 +11,7 @@ body {
 .global_header {
   height: 10%;
   background-color: $header-color;
-  box-shadow: 0 5px 20px #1d1d1d;
+  box-shadow: 0 5px 20px $dark-color;
   h1 {
     padding: 0;
     margin: 0;
