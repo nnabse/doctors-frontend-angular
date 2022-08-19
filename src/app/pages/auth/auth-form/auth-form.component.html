@@ -1,11 +1,11 @@
 <div class="form_title">
-  <h2>{{ title }}</h2>
+  <h2>{{ labels[formType].title }}</h2>
 </div>
 <div class="inputs">
-  <form [formGroup]="formGroupName">
+  <form [formGroup]="authForm">
     <mat-form-field appearance="fill">
       <mat-label>Account Name</mat-label>
-      <input matInput [type]="'text'" #login formControlName="login" />
+      <input matInput type='text' #login formControlName="login" />
       <button
         *ngIf="login.value"
         mat-icon-button
@@ -50,7 +50,7 @@
         {{ password.value.length || 0 }}/{{ passMaxLength }}</mat-hint
       >
     </mat-form-field>
-    <mat-form-field *ngIf="showPassRepeat" appearance="fill">
+    <mat-form-field *ngIf="formType === 'Sign Up'" appearance="fill">
       <mat-label>Password Repeat</mat-label>
       <input
         matInput
@@ -81,27 +81,28 @@
       <mat-hint align="end">
         {{ passRepeat.value.length || 0 }}/{{ passMaxLength }}</mat-hint
       >
-      <mat-error *ngIf="errorText">{{ errorText }}</mat-error>
+      <mat-error>{{ passwordRepeatGetError() }}</mat-error>
     </mat-form-field>
     <div class="form_submit">
       <button
         mat-raised-button
         color="primary"
-        [disabled]="formGroupName.invalid"
+        [disabled]="authForm.invalid"
         (click)="buttonFunction()"
       >
-        {{ btnText }}
+        {{ labels[formType].btnText }}
       </button>
     </div>
     <div class="form_redirect_link">
-      <p class="redirect_link_text">{{ redirectText }} <br /></p>
+      <p class="redirect_link_text">
+        {{ labels[formType].redirectText }} <br />
+      </p>
       <a
         mat-raised-button
-        [routerLink]="link"
+        [routerLink]="labels[formType].link"
         routerLinkActive="active"
         ariaCurrentWhenActive="page"
-      >
-        {{ redirectBtnText }}
+        >{{ labels[formType].redirectBtnText }}
       </a>
     </div>
   </form>

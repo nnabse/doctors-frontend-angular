@@ -1,26 +1,25 @@
 .form_title {
-    margin-top: 15px;
-    margin-bottom: 15px;
-    display: flex;
-    justify-content: center;
-  }
+  margin-top: 15px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: center;
+}
 
-  .inputs form {
-    max-width: 450px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto;
-  }
+.inputs form {
+  max-width: 450px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
 
-  .form_submit {
-    margin-top: 15px;
-  }
+.form_submit {
+  margin-top: 15px;
+}
 
-  .form_redirect_link {
-    margin-top: 15%;
-  }
-
+.form_redirect_link {
+  margin-top: 15%;
+}
 
 .form_redirect_link_text {
   padding-left: 5px;

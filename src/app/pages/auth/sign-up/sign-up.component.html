@@ -6,9 +6,7 @@
     <div class="reg_form">
       <app-auth-form
         formFor="Sign Up"
-        [formGroup]="registerForm"
         (submitBtnFn)="redirectToMainPage()"
-        [passwordRepeatError]="passwordRepeatGetError()"
       ></app-auth-form>
     </div>
   </div>
