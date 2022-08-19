@@ -18,7 +18,7 @@ import {
 export class SignUpComponent {
   constructor(private router: Router) {}
 
-  public redirect(): void {
+  public redirectToMainPage(): void {
     this.router.navigate(['main']);
   }
 
@@ -37,19 +37,19 @@ export class SignUpComponent {
     {
       login: new FormControl('', [
         Validators.required,
-        Validators.pattern('^[A-Za-z]+$'),
+        Validators.pattern('^[A-Za-z0-9_]+$'),
         Validators.minLength(6),
         Validators.maxLength(18),
       ]),
       password: new FormControl('', [
         Validators.required,
-        Validators.pattern('^[A-Za-z0-9]*$'),
+        Validators.pattern('^[A-Za-z0-9_\\W]*$'),
         Validators.minLength(6),
         Validators.maxLength(24),
       ]),
       passwordRepeat: new FormControl('', [
         Validators.required,
-        Validators.pattern('^[A-Za-z0-9]*$'),
+        Validators.pattern('^[A-Za-z0-9_\\W]*$'),
         Validators.minLength(6),
         Validators.maxLength(24),
       ]),
