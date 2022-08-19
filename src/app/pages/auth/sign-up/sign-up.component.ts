@@ -16,9 +16,6 @@ import {
   styleUrls: ['./sign-up.component.scss'],
 })
 export class SignUpComponent {
-  public showPassword = false;
-  public showPasswordRepeat = false;
-
   constructor(private router: Router) {}
 
   public redirect(): void {
@@ -36,7 +33,7 @@ export class SignUpComponent {
     return null;
   };
 
-  public RegisterForm: FormGroup = new FormGroup(
+  public registerForm: FormGroup = new FormGroup(
     {
       login: new FormControl('', [
         Validators.required,
@@ -61,16 +58,16 @@ export class SignUpComponent {
   );
 
   get passwordInput() {
-    return this.RegisterForm.get('password');
+    return this.registerForm.get('password');
   }
 
   get passwordRepeatInput() {
-    return this.RegisterForm.get('passwordRepeat');
+    return this.registerForm.get('passwordRepeat');
   }
 
   public passwordRepeatGetError(): string {
     return this.passwordRepeatInput?.hasError('noRepeat')
-      ? 'Passwords do not match'
+      ? 'Passwords do not match!'
       : '';
   }
 }

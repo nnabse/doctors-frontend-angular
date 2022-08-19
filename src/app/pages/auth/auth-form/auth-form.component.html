@@ -1,0 +1,108 @@
+<div class="form_title">
+  <h2>{{ title }}</h2>
+</div>
+<div class="inputs">
+  <form [formGroup]="formGroupName">
+    <mat-form-field appearance="fill">
+      <mat-label>Account Name</mat-label>
+      <input matInput [type]="'text'" #login formControlName="login" />
+      <button
+        *ngIf="login.value"
+        mat-icon-button
+        matSuffix
+        aria-label="Clear"
+        (click)="login.value = ''"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-hint align="end">
+        {{ login.value.length || 0 }}/{{ loginMaxLength }}</mat-hint
+      ></mat-form-field
+    ><mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        [type]="showPassword ? 'text' : 'password'"
+        #password
+        formControlName="password"
+      />
+      <button
+        *ngIf="password.value"
+        matSuffix
+        mat-icon-button
+        aria-label="Clear"
+        (click)="password.value = ''"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+      <button
+        *ngIf="password.value"
+        matSuffix
+        mat-icon-button
+        aria-label="Show"
+        (click)="showPasswordToggle()"
+      >
+        <mat-icon>{{
+          showPassword ? "visibility_off" : "visibility"
+        }}</mat-icon>
+      </button>
+      <mat-hint align="end">
+        {{ password.value.length || 0 }}/{{ passMaxLength }}</mat-hint
+      >
+    </mat-form-field>
+    <mat-form-field *ngIf="showPassRepeat" appearance="fill">
+      <mat-label>Password Repeat</mat-label>
+      <input
+        matInput
+        [type]="showPasswordRepeat ? 'text' : 'password'"
+        #passRepeat
+        formControlName="passwordRepeat"
+      />
+      <button
+        *ngIf="passRepeat.value"
+        matSuffix
+        mat-icon-button
+        aria-label="Clear"
+        (click)="passRepeat.value = ''"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+      <button
+        *ngIf="passRepeat.value"
+        matSuffix
+        mat-icon-button
+        aria-label="Show"
+        (click)="showPasswordRepeatToggle()"
+      >
+        <mat-icon>
+          {{ showPasswordRepeat ? "visibility_off" : "visibility" }}
+        </mat-icon>
+      </button>
+      <mat-hint align="end">
+        {{ passRepeat.value.length || 0 }}/{{ passMaxLength }}</mat-hint
+      >
+      <mat-error *ngIf="errorText">{{ errorText }}</mat-error>
+    </mat-form-field>
+    <div class="form_submit">
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="formGroupName.invalid"
+        (click)="buttonFunction()"
+      >
+        {{ btnText }}
+      </button>
+    </div>
+    <div class="form_redirect_link">
+      <p class="redirect_link_text">{{ redirectText }} <br /></p>
+      <a
+        mat-raised-button
+        [routerLink]="link"
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page"
+      >
+        {{ redirectBtnText }}
+      </a>
+    </div>
+  </form>
+</div>

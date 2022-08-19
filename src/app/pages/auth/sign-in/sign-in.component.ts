@@ -8,11 +8,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./sign-in.component.scss'],
 })
 export class SignInComponent {
-  public showPassword = false;
-
   constructor(private router: Router) {}
 
-  public LoginForm: FormGroup = new FormGroup({
+  public loginForm: FormGroup = new FormGroup({
     login: new FormControl('', [
       Validators.required,
       Validators.pattern('^[A-Za-z]+$'),
@@ -32,10 +30,10 @@ export class SignInComponent {
   }
 
   get loginInput() {
-    return this.LoginForm.get('login');
+    return this.loginForm.get('login');
   }
 
   get passwordInput() {
-    return this.LoginForm.get('password');
+    return this.loginForm.get('password');
   }
 }

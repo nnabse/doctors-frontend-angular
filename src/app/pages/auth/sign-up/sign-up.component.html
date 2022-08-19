@@ -4,108 +4,12 @@
       <img src="assets/icons/hospital-logo.svg" alt="hospital" />
     </div>
     <div class="reg_form">
-      <div class="form_title"><h2>Registration</h2></div>
-      <div class="inputs">
-        <form [formGroup]="RegisterForm">
-          <mat-form-field appearance="fill">
-            <mat-label>Account name</mat-label>
-            <input
-              matInput
-              type="text"
-              #login
-              formControlName="login"
-              autocomplete="off"
-            />
-            <mat-hint align="end">{{ login.value.length || 0 }}/18</mat-hint>
-          </mat-form-field>
-          <mat-form-field appearance="fill">
-            <mat-label>Password</mat-label>
-            <input
-              matInput
-              [type]="showPassword ? 'text' : 'password'"
-              #password
-              formControlName="password"
-            />
-            <button
-              *ngIf="passwordInput?.value"
-              matSuffix
-              mat-icon-button
-              aria-label="Clear"
-              (click)="passwordInput?.setValue('')"
-            >
-              <mat-icon>close</mat-icon>
-            </button>
-            <button
-              *ngIf="passwordInput?.value"
-              matSuffix
-              mat-icon-button
-              aria-label="Show"
-              (click)="showPassword = !showPassword"
-            >
-              <mat-icon>
-                {{ showPassword ? "visibility_off" : "visibility" }}
-              </mat-icon>
-            </button>
-            <mat-hint align="end">{{ password.value.length || 0 }}/24</mat-hint>
-          </mat-form-field>
-          <mat-form-field appearance="fill">
-            <mat-label>Password Repeat</mat-label>
-            <input
-              matInput
-              [type]="showPasswordRepeat ? 'text' : 'password'"
-              #passwordRepeat
-              formControlName="passwordRepeat"
-            />
-            <button
-              *ngIf="passwordRepeatInput?.value"
-              matSuffix
-              mat-icon-button
-              aria-label="Clear"
-              (click)="passwordRepeatInput?.setValue('')"
-            >
-              <mat-icon>close</mat-icon>
-            </button>
-            <button
-              *ngIf="passwordRepeatInput?.value"
-              matSuffix
-              mat-icon-button
-              aria-label="Show"
-              (click)="showPasswordRepeat = !showPasswordRepeat"
-            >
-              <mat-icon>
-                {{ showPasswordRepeat ? "visibility_off" : "visibility" }}
-              </mat-icon>
-            </button>
-            <mat-hint align="end"
-              >{{ passwordRepeat.value.length || 0 }}/24</mat-hint
-            >
-            <mat-error *ngIf="passwordRepeatInput?.invalid">{{
-              passwordRepeatGetError()
-            }}</mat-error>
-          </mat-form-field>
-          <div class="form_submit">
-            <button
-              mat-raised-button
-              color="primary"
-              [disabled]="RegisterForm.invalid"
-              (click)="redirect()"
-            >
-              Register
-            </button>
-            <div class="form_login_link">
-              <p class="form_login_link">Already have an account? <br /></p>
-              <a
-                mat-raised-button
-                routerLink="/signIn"
-                routerLinkActive="active"
-                ariaCurrentWhenActive="page"
-              >
-                Login
-              </a>
-            </div>
-          </div>
-        </form>
-      </div>
+      <app-auth-form
+        formFor="Sign Up"
+        [formGroup]="registerForm"
+        (submitBtnFn)="redirect()"
+        [passwordRepeatError]="passwordRepeatGetError()"
+      ></app-auth-form>
     </div>
   </div>
 </div>
