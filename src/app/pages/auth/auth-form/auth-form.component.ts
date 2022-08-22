@@ -1,11 +1,17 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Output,
+  OnChanges,
+  SimpleChanges,
+  Input,
+} from '@angular/core';
+
 import {
   FormGroup,
   FormControl,
   Validators,
-  ValidatorFn,
   AbstractControl,
-  ValidationErrors,
 } from '@angular/forms';
 
 @Component({
@@ -13,26 +19,25 @@ import {
   templateUrl: './auth-form.component.html',
   styleUrls: ['./auth-form.component.scss'],
 })
-export class AuthFormComponent {
+export class AuthFormComponent implements OnChanges {
   @Output() submitBtnFn = new EventEmitter();
-  @Input()
-  set formFor(value: 'Sign In' | 'Sign Up') {
-    this.formType = value;
-    if (this.formType === 'Sign In') {
-      this.authForm.removeControl('passwordRepeat');
+  @Input() formFor: 'Sign In' | 'Sign Up' = 'Sign In';
+
+  ngOnChanges(changes: SimpleChanges): void {
+    for (let propName in changes) {
+      const changedProp = changes[propName];
+      this.formType = changedProp.currentValue;
     }
   }
 
-  checkPasswords: ValidatorFn = (
-    group: AbstractControl
-  ): ValidationErrors | null => {
-    let password = group.get('password')?.value;
-    let passwordRepeat = group.get('passwordRepeat')?.value;
+  checkPasswords(group: AbstractControl) {
+    const password = group.get('password')?.value;
+    const passwordRepeat = group.get('passwordRepeat')?.value;
 
     if (password !== passwordRepeat)
       group.get('passwordRepeat')?.setErrors({ noRepeat: true });
     return null;
-  };
+  }
 
   public authForm: FormGroup = new FormGroup(
     {
