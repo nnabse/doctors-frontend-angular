@@ -27,6 +27,9 @@ export class AuthFormComponent implements OnChanges {
     for (let propName in changes) {
       const changedProp = changes[propName];
       this.formType = changedProp.currentValue;
+      if (this.formType === 'Sign In') {
+        this.authForm.removeControl('passwordRepeat');
+      }
     }
   }
 
