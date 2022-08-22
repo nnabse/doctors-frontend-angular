@@ -15,6 +15,12 @@ import { AuthFormComponent } from '@pages/auth/auth-form/auth-form.component';
 import { MainComponent } from '@pages/main/main.component';
 
 import { HeaderComponent } from '@components/header/header.component';
+import { HttpClientModule } from '@angular/common/http';
+
+//
+
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+//
 
 @NgModule({
   declarations: [
@@ -30,6 +36,8 @@ import { HeaderComponent } from '@components/header/header.component';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     MaterialModule,
+    HttpClientModule,
+    MatSnackBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

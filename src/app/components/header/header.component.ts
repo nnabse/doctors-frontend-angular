@@ -20,11 +20,11 @@ export class HeaderComponent implements OnInit {
           case '/signUp':
             this.title = 'Sign Up';
             break;
-          case '/main':
+          case '/' || '/main':
             this.title = 'Main';
             break;
           default:
-            this.title = 'Sign In';
+            this.title = 'Main';
             break;
         }
       }
