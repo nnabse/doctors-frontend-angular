@@ -1,0 +1,13 @@
+<div class="auth_container">
+  <div class="main">
+    <div class="image">
+      <img src="assets/icons/hospital-logo.svg" alt="hospital" />
+    </div>
+    <div class="form">
+      <app-auth-form
+        [formFor]="currRoute"
+        (submitBtnFn)="redirectToMainPage()"
+      ></app-auth-form>
+    </div>
+  </div>
+</div>
