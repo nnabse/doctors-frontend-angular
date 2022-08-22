@@ -11,7 +11,7 @@
         mat-icon-button
         matSuffix
         aria-label="Clear"
-        (click)="login.value = ''"
+        (click)="authForm.controls['login'].setValue('')"
       >
         <mat-icon>close</mat-icon>
       </button>
@@ -31,7 +31,7 @@
         matSuffix
         mat-icon-button
         aria-label="Clear"
-        (click)="password.value = ''"
+        (click)="authForm.controls['password'].setValue('')"
       >
         <mat-icon>close</mat-icon>
       </button>
@@ -63,7 +63,7 @@
         matSuffix
         mat-icon-button
         aria-label="Clear"
-        (click)="passRepeat.value = ''"
+        (click)="authForm.controls['passwordRepeat'].setValue('')"
       >
         <mat-icon>close</mat-icon>
       </button>

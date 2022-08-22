@@ -24,7 +24,7 @@ export class HeaderComponent implements OnInit {
             this.title = 'Main';
             break;
           default:
-            this.title = 'Sign Up';
+            this.title = 'Sign In';
             break;
         }
       }
