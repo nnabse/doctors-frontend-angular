@@ -36,10 +36,7 @@ export class AuthFormComponent implements OnChanges {
   checkPasswords(group: AbstractControl) {
     const password = group.get('password')?.value;
     const passwordRepeat = group.get('passwordRepeat')?.value;
-
-    if (password !== passwordRepeat)
-      group.get('passwordRepeat')?.setErrors({ noRepeat: true });
-    return null;
+    return password !== passwordRepeat ? { noRepeat: true } : null;
   }
 
   public authForm: FormGroup = new FormGroup(
@@ -71,9 +68,7 @@ export class AuthFormComponent implements OnChanges {
   }
 
   public passwordRepeatGetError(): string {
-    return this.passwordRepeatInput?.hasError('noRepeat')
-      ? 'Passwords do not match!'
-      : '';
+    return this.authForm?.hasError('noRepeat') ? 'Passwords do not match!' : '';
   }
 
   public buttonFunction(): void {
