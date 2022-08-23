@@ -31,6 +31,7 @@ export class AuthService {
         catchError((err) => {
           if (err.status === 0) {
             this.errorSnack.openSnackBar('DB connection error!');
+            return of(null);
           }
           this.errorSnack.openSnackBar(err.error);
           return of(null);
@@ -53,6 +54,7 @@ export class AuthService {
         catchError((err) => {
           if (err.status === 0) {
             this.errorSnack.openSnackBar('DB connection error!');
+            return of(null);
           }
           this.errorSnack.openSnackBar(err.error);
           return of(null);
