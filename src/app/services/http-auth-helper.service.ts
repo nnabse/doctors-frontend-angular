@@ -11,11 +11,11 @@ import { User } from '@interfaces/user.interface';
 export class HttpAuthHelperService {
   constructor(private http: HttpClient) {}
 
-  public loginUser<T>(link: string, body: User): Observable<T> {
-    return this.http.post<T>(`${DB_LINK}${link}`, body);
+  public loginUser<Auth>(link: string, body: User): Observable<Auth> {
+    return this.http.post<Auth>(`${DB_LINK}${link}`, body);
   }
 
-  public registerUser<T>(link: string, body: User): Observable<T> {
-    return this.http.post<T>(`${DB_LINK}${link}`, body);
+  public registerUser<Auth>(link: string, body: User): Observable<Auth> {
+    return this.http.post<Auth>(`${DB_LINK}${link}`, body);
   }
 }

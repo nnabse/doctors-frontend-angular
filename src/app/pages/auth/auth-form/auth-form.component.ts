@@ -9,6 +9,8 @@ import {
 
 import { AuthService } from '@services/auth.service';
 
+import { PagesName } from '@enums/auth.enums';
+
 import {
   FormGroup,
   FormControl,
@@ -29,7 +31,7 @@ export class AuthFormComponent implements OnChanges {
     for (let propName in changes) {
       const changedProp = changes[propName];
       this.formType = changedProp.currentValue;
-      if (this.formType === 'Sign In') {
+      if (this.formType === PagesName.signIn) {
         this.authForm.removeControl('passwordRepeat');
       }
     }
@@ -79,7 +81,7 @@ export class AuthFormComponent implements OnChanges {
   }
 
   public buttonFunction(): void {
-    if (this.formType === 'Sign Up') {
+    if (this.formType === PagesName.signUp) {
       this.authService.register(this.authForm.value);
       return;
     }

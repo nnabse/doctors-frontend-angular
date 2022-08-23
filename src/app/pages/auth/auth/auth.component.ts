@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { Routes, PagesName } from '@enums/auth.enums';
+
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
@@ -12,8 +14,8 @@ export class AuthComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    if (this.router.url === '/signUp') this.currRoute = 'Sign Up';
-    if (this.router.url === '/signIn') this.currRoute = 'Sign In';
+    if (this.router.url === Routes.signUp) this.currRoute = PagesName.signUp;
+    if (this.router.url === Routes.signIn) this.currRoute = PagesName.signIn;
   }
 
   public redirectToMainPage(): void {
