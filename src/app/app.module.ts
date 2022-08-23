@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 
+import { HttpClientModule } from '@angular/common/http';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -13,14 +15,10 @@ import { MaterialModule } from '@material/material.module';
 import { AuthComponent } from '@pages/auth/auth/auth.component';
 import { AuthFormComponent } from '@pages/auth/auth-form/auth-form.component';
 import { MainComponent } from '@pages/main/main.component';
-
 import { HeaderComponent } from '@components/header/header.component';
-import { HttpClientModule } from '@angular/common/http';
 
-//
-
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-//
+import { AuthGuard } from '@guards/auth.guard';
+import { ExitMainGuard } from '@guards/exit-main.guard';
 
 @NgModule({
   declarations: [
@@ -37,9 +35,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     ReactiveFormsModule,
     MaterialModule,
     HttpClientModule,
-    MatSnackBarModule,
   ],
-  providers: [],
+  providers: [AuthGuard, ExitMainGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

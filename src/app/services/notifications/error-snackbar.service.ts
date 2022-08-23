@@ -3,14 +3,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Injectable({
   providedIn: 'root',
 })
-export class SnackbarService {
+export class ErrorSnackbarService {
   constructor(private snackBar: MatSnackBar) {}
 
   openSnackBar(message: string) {
     this.snackBar.open(message, 'Close', {
-      duration: 2500,
-      verticalPosition: 'bottom',
-      horizontalPosition: 'center',
+      duration: 3500,
+      verticalPosition: 'top',
+      horizontalPosition: 'right',
     });
   }
 }

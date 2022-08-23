@@ -4,14 +4,14 @@ import { CanActivate, Router } from '@angular/router';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate {
+export class ExitMainGuard implements CanActivate {
   constructor(private router: Router) {}
-  canActivate(): boolean {
+  canActivate() {
     if (
-      !localStorage.getItem('accessToken') ||
-      !localStorage.getItem('refreshToken')
+      localStorage.getItem('accessToken') &&
+      localStorage.getItem('refreshToken')
     ) {
-      this.router.navigate(['/signIn']);
+      this.router.navigate(['/main']);
       return false;
     }
     return true;
