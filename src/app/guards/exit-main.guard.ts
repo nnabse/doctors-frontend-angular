@@ -6,7 +6,7 @@ import { CanActivate, Router } from '@angular/router';
 })
 export class ExitMainGuard implements CanActivate {
   constructor(private router: Router) {}
-  canActivate() {
+  canActivate(): boolean {
     if (
       localStorage.getItem('accessToken') &&
       localStorage.getItem('refreshToken')
