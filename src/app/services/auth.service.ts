@@ -36,7 +36,7 @@ export class AuthService {
           return of(null);
         })
       )
-      .subscribe((result) => {
+      .subscribe((result: Auth | null) => {
         if (result) {
           this.snack.openSnackBar('Success registration!');
           localStorage.setItem('accessToken', result.accessToken);
