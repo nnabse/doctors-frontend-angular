@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { Routes, PagesName } from '@enums/auth.enums';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -14,17 +16,17 @@ export class HeaderComponent implements OnInit {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         switch (event.url) {
-          case '/signIn':
-            this.title = 'Sign In';
+          case Routes.SIGN_IN:
+            this.title = PagesName.SIGN_IN;
             break;
-          case '/signUp':
-            this.title = 'Sign Up';
+          case Routes.SIGN_UP:
+            this.title = PagesName.SIGN_UP;
             break;
-          case '/main':
-            this.title = 'Main';
+          case Routes.MAIN:
+            this.title = PagesName.MAIN;
             break;
           default:
-            this.title = 'Sign In';
+            this.title = PagesName.MAIN;
             break;
         }
       }

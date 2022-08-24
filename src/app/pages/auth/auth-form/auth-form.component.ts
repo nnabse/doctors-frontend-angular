@@ -7,6 +7,10 @@ import {
   Input,
 } from '@angular/core';
 
+import { AuthService } from '@services/auth.service';
+
+import { PagesName } from '@enums/auth.enums';
+
 import {
   FormGroup,
   FormControl,
@@ -27,7 +31,7 @@ export class AuthFormComponent implements OnChanges {
     for (let propName in changes) {
       const changedProp = changes[propName];
       this.formType = changedProp.currentValue;
-      if (this.formType === 'Sign In') {
+      if (this.formType === PagesName.SIGN_IN) {
         this.authForm.removeControl('passwordRepeat');
       }
     }
@@ -36,7 +40,10 @@ export class AuthFormComponent implements OnChanges {
   checkPasswords(group: AbstractControl) {
     const password = group.get('password')?.value;
     const passwordRepeat = group.get('passwordRepeat')?.value;
-    return password !== passwordRepeat ? { noRepeat: true } : null;
+    if (password !== passwordRepeat) {
+      group.get('passwordRepeat')?.setErrors({ noRepeat: true });
+    }
+    return null;
   }
 
   public authForm: FormGroup = new FormGroup(
@@ -68,11 +75,17 @@ export class AuthFormComponent implements OnChanges {
   }
 
   public passwordRepeatGetError(): string {
-    return this.authForm?.hasError('noRepeat') ? 'Passwords do not match!' : '';
+    return this.authForm.get('passwordRepeat')?.hasError('noRepeat')
+      ? 'Passwords do not match!'
+      : '';
   }
 
   public buttonFunction(): void {
-    this.submitBtnFn.emit();
+    if (this.formType === PagesName.SIGN_UP) {
+      this.authService.register(this.authForm.value);
+      return;
+    }
+    this.authService.login(this.authForm.value);
   }
 
   public showPasswordToggle(): void {
@@ -114,4 +127,6 @@ export class AuthFormComponent implements OnChanges {
   public redirectText = '';
   public link = '';
   public redirectBtnText = '';
+
+  constructor(private authService: AuthService) {}
 }
