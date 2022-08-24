@@ -16,17 +16,17 @@ export class HeaderComponent implements OnInit {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         switch (event.url) {
-          case Routes.signIn:
-            this.title = PagesName.signIn;
+          case Routes.SIGN_IN:
+            this.title = PagesName.SIGN_IN;
             break;
-          case Routes.signUp:
-            this.title = PagesName.signUp;
+          case Routes.SIGN_UP:
+            this.title = PagesName.SIGN_UP;
             break;
-          case Routes.main:
-            this.title = PagesName.main;
+          case Routes.MAIN:
+            this.title = PagesName.MAIN;
             break;
           default:
-            this.title = PagesName.main;
+            this.title = PagesName.MAIN;
             break;
         }
       }

@@ -14,8 +14,8 @@ export class AuthComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    if (this.router.url === Routes.signUp) this.currRoute = PagesName.signUp;
-    if (this.router.url === Routes.signIn) this.currRoute = PagesName.signIn;
+    if (this.router.url === Routes.SIGN_UP) this.currRoute = PagesName.SIGN_UP;
+    if (this.router.url === Routes.SIGN_IN) this.currRoute = PagesName.SIGN_IN;
   }
 
   public redirectToMainPage(): void {

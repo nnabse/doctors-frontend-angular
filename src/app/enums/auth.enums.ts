@@ -1,13 +1,13 @@
 enum Routes {
-  signIn = '/signIn',
-  signUp = '/signUp',
-  main = '/main',
+  SIGN_IN = '/signIn',
+  SIGN_UP = '/signUp',
+  MAIN = '/main',
 }
 
 enum PagesName {
-  signIn = 'Sign In',
-  signUp = 'Sign Up',
-  main = 'Main',
+  SIGN_IN = 'Sign In',
+  SIGN_UP = 'Sign Up',
+  MAIN = 'Main',
 }
 
 export { Routes, PagesName };

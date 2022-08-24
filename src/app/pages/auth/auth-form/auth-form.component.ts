@@ -31,7 +31,7 @@ export class AuthFormComponent implements OnChanges {
     for (let propName in changes) {
       const changedProp = changes[propName];
       this.formType = changedProp.currentValue;
-      if (this.formType === PagesName.signIn) {
+      if (this.formType === PagesName.SIGN_IN) {
         this.authForm.removeControl('passwordRepeat');
       }
     }
@@ -81,7 +81,7 @@ export class AuthFormComponent implements OnChanges {
   }
 
   public buttonFunction(): void {
-    if (this.formType === PagesName.signUp) {
+    if (this.formType === PagesName.SIGN_UP) {
       this.authService.register(this.authForm.value);
       return;
     }
