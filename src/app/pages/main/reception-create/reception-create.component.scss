@@ -1,0 +1,39 @@
+@import "variables";
+
+.reception_create_content {
+  margin-top: 5px;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+  .reception_create_form {
+    width: 100%;
+  }
+
+  background-color: $header-color;
+
+  box-shadow: 0 5px 20px $dark-color;
+
+  .inputs {
+    width: 100%;
+    form {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+    }
+  }
+
+  .input {
+    max-width: 300px;
+    width: 100%;
+  }
+
+  .reception_form_submit{
+    height: 50%;
+    button {
+      width: 80px;
+      height: 52px;
+    }
+  }
+}

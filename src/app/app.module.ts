@@ -14,7 +14,11 @@ import { MaterialModule } from '@material/material.module';
 
 import { AuthComponent } from '@pages/auth/auth/auth.component';
 import { AuthFormComponent } from '@pages/auth/auth-form/auth-form.component';
+
 import { MainComponent } from '@pages/main/main.component';
+import { ReceptionCreateComponent } from '@pages/main/reception-create/reception-create.component';
+import { ReceptionsListComponent } from '@pages/main/receptions-list/receptions-list.component';
+
 import { HeaderComponent } from '@components/header/header.component';
 
 import { AuthGuard } from '@guards/auth.guard';
@@ -27,6 +31,8 @@ import { ExitMainGuard } from '@guards/exit-main.guard';
     MainComponent,
     AuthFormComponent,
     AuthComponent,
+    ReceptionCreateComponent,
+    ReceptionsListComponent,
   ],
   imports: [
     BrowserModule,

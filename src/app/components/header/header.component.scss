@@ -16,6 +16,16 @@
   }
 
   .header_title {
-    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .header_logout_btn {
+    position: absolute;
+    display: flex;
+    width: 95%;
+    justify-content: flex-end;
+    margin: 10px;
   }
 }
