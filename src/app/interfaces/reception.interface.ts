@@ -1,12 +1,12 @@
 export interface Reception {
-  id: any;
+  id: number;
   patientName: string;
   date: string;
   complaints: string;
-  DoctorId: number;
-  Doctor?: {
+  doctorId: number;
+  doctor?: {
     id?: number;
-    fullname?: string;
+    fullName?: string;
   };
   accessToken: string;
 }

@@ -21,19 +21,16 @@ export class DoctorsService {
     private snack: SnackbarService
   ) {}
 
-  public get(body: any): void {
+  public getDoctorsList(): void {
     this.httpDoctorsHelper
-      .getDoctors<Doctor[]>(DOCTORS_LINK, {
-        accessToken: body.accessToken,
-        refreshToken: body.refreshToken,
-      })
+      .getDoctors<Doctor[]>(DOCTORS_LINK)
       .pipe(
         catchError((err) => {
           if (err.status === 0) {
             this.snack.openErrorSnackBar('DB connection error!');
             return of(null);
           }
-          this.snack.openErrorSnackBar(err.error.message);
+          this.snack.openErrorSnackBar(err.error);
           return of(null);
         })
       )

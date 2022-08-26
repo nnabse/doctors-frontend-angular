@@ -11,12 +11,7 @@ import { Observable } from 'rxjs';
 export class HttpDoctorsHelperService {
   constructor(private http: HttpClient) {}
 
-  public getDoctors<Doctor>(link: string, body: any): Observable<Doctor> {
-    return this.http.get<Doctor>(`${DB_LINK}${link}`, {
-      params: {
-        accessToken: body.accessToken,
-        refreshToken: body.refreshToken,
-      },
-    });
+  public getDoctors<Doctor>(link: string): Observable<Doctor> {
+    return this.http.get<Doctor>(`${DB_LINK}${link}`);
   }
 }

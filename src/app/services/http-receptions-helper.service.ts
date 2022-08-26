@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { DB_LINK } from '@constants/db-links.constants';
-import { Auth } from '@interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -11,48 +10,30 @@ import { Auth } from '@interfaces/user.interface';
 export class HttpReceptionsHelperService {
   constructor(private http: HttpClient) {}
 
-  public getReceptions<Reception>(
-    link: string,
-    body: Auth
-  ): Observable<Reception> {
-    return this.http.get<Reception>(`${DB_LINK}${link}`, {
-      params: {
-        accessToken: body.accessToken,
-        refreshToken: body.refreshToken,
-      },
-    });
+  public getReceptions<Reception>(link: string): Observable<Reception> {
+    return this.http.get<Reception>(`${DB_LINK}${link}`);
   }
 
   public createReceptions<Reception>(
     link: string,
     body: any
   ): Observable<Reception> {
-    const { date, patientName, complaints, DoctorId, accessToken } = body;
-    return this.http.post<Reception>(
-      `${DB_LINK}${link}`,
-      {},
-      {
-        params: {
-          patientName: patientName,
-          DoctorId: DoctorId,
-          date: date,
-          complaints: complaints,
-          accessToken: accessToken,
-        },
-      }
-    );
+    const { date, patientName, complaints, doctorId } = body;
+    return this.http.post<Reception>(`${DB_LINK}${link}`, {
+      date: date,
+      patientName: patientName,
+      complaints: complaints,
+      doctorId: doctorId,
+    });
   }
 
   public deleteReception<Reception>(
     link: string,
     body: any
   ): Observable<Reception> {
-    const { accessToken, id } = body;
+    const { id } = body;
     return this.http.delete<Reception>(`${DB_LINK}${link}`, {
-      params: {
-        id: id,
-        accessToken: accessToken,
-      },
+      body: { id: id },
     });
   }
 }

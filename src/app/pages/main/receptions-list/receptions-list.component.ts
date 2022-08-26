@@ -12,27 +12,18 @@ export class ReceptionsListComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
   public receptionsList: Object[] = [];
 
-  private accessToken: string | null = '';
-  private refreshToken: string | null = '';
-
   constructor(private receptionsService: ReceptionsService) {}
 
   displayedColumns: string[] = [
     'patientName',
-    'Doctor',
+    'doctor',
     'date',
     'complaints',
     'actions',
   ];
 
   ngOnInit(): void {
-    this.accessToken = localStorage.getItem('accessToken');
-    this.refreshToken = localStorage.getItem('refreshToken');
-
-    this.receptionsService.get({
-      accessToken: this.accessToken,
-      refreshToken: this.refreshToken,
-    });
+    this.receptionsService.getReceptionsList();
     this.subscription = this.receptionsService.receptionsList$.subscribe(
       (data) => {
         this.receptionsList = data;
@@ -41,8 +32,9 @@ export class ReceptionsListComponent implements OnInit, OnDestroy {
   }
 
   public deleteReception(id: number): void {
-    const accessToken = localStorage.getItem('accessToken');
-    this.receptionsService.delete({ accessToken: accessToken, id: id });
+    this.receptionsService.deleteReception({
+      id: id,
+    });
   }
 
   ngOnDestroy(): void {

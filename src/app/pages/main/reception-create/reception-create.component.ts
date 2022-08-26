@@ -17,8 +17,6 @@ export class ReceptionCreateComponent implements OnInit, OnDestroy {
   private nameValue = '';
   private date: Date | undefined;
   private complaints = '';
-  private accessToken: string | null = '';
-  private refreshToken: string | null = '';
   private doctorId = 0;
 
   public doctorsList: Doctor[] = [];
@@ -40,35 +38,24 @@ export class ReceptionCreateComponent implements OnInit, OnDestroy {
     this.doctorId = this.createReceptionForm.get('doctor')?.value;
     this.date = this.createReceptionForm.get('date')?.value;
     this.complaints = this.createReceptionForm.get('complaints')?.value;
-    this.accessToken = localStorage.getItem('accessToken');
   }
 
   public createReception(): void {
     this.getValues();
-    const formatDate = this.date?.toISOString().split('T')[0];
+    const formatDate = this.date?.toLocaleDateString('en-CA');
 
-    this.receptionsService.create({
+    this.receptionsService.createReception({
       patientName: this.nameValue,
-      DoctorId: this.doctorId,
+      doctorId: this.doctorId,
       date: formatDate,
       complaints: this.complaints,
-      accessToken: this.accessToken,
     });
   }
 
   ngOnInit(): void {
-    this.accessToken = localStorage.getItem('accessToken');
-    this.refreshToken = localStorage.getItem('refreshToken');
-
-    this.doctorService.get({
-      accessToken: this.accessToken,
-      refreshToken: this.refreshToken,
-    });
-
+    this.doctorService.getDoctorsList();
     this.subscription = this.doctorService.doctorsList$.subscribe((data) => {
-      if (data) {
-        this.doctorsList = data;
-      }
+      this.doctorsList = data || [];
     });
   }
 

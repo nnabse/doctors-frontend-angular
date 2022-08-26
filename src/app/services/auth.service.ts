@@ -22,6 +22,12 @@ export class AuthService {
     private snack: SnackbarService
   ) {}
 
+  public getTokens(): any {
+    const accesstoken = localStorage.getItem('accessToken');
+    const refreshtoken = localStorage.getItem('refreshToken');
+    return { accesstoken, refreshtoken };
+  }
+
   public register(body: User): void {
     this.httpAuthService
       .registerUser<Auth>(CREATE_USER_LINK, body)
@@ -54,7 +60,7 @@ export class AuthService {
             this.snack.openErrorSnackBar('DB connection error!');
             return of(null);
           }
-          this.snack.openErrorSnackBar(err.error);
+          this.snack.openErrorSnackBar(err.error.message);
           return of(null);
         })
       )

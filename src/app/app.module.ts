@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -24,6 +24,8 @@ import { HeaderComponent } from '@components/header/header.component';
 import { AuthGuard } from '@guards/auth.guard';
 import { ExitMainGuard } from '@guards/exit-main.guard';
 
+import { RequestsInterceptor } from '@interceptors/requests.interceptor';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,7 +44,11 @@ import { ExitMainGuard } from '@guards/exit-main.guard';
     MaterialModule,
     HttpClientModule,
   ],
-  providers: [AuthGuard, ExitMainGuard],
+  providers: [
+    AuthGuard,
+    ExitMainGuard,
+    { provide: HTTP_INTERCEPTORS, useClass: RequestsInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
