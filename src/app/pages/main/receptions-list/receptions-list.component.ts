@@ -55,9 +55,7 @@ export class ReceptionsListComponent implements OnInit, OnDestroy {
 
   public deleteReception(id: number): void {
     this.receptionsService
-      .deleteReception({
-        id: id,
-      })
+      .deleteReception(id)
       .pipe(
         catchError((err) => {
           const errMsg = !err.status

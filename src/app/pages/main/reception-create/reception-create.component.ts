@@ -48,7 +48,7 @@ export class ReceptionCreateComponent implements OnInit {
     this.receptionsService
       .createReception({
         patientName: this.nameValue,
-        doctorId: this.doctorId,
+        doctor: { id: this.doctorId },
         date: formatDate,
         complaints: this.complaints,
       })
@@ -65,14 +65,10 @@ export class ReceptionCreateComponent implements OnInit {
         if (!result) {
           return;
         }
-        console.log(result);
         result.doctor = {};
         result.doctor = this.doctorService.doctorsList$.find(
           (doctor) => this.doctorId === doctor.id
         );
-        console.log(this.doctorId);
-        console.log(result);
-
         this.snack.openSnackBar('Success');
         this.receptionsService.receptionsList$.next([
           ...this.receptionsService.receptionsList$.value,

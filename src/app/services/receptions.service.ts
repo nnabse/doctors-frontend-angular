@@ -21,20 +21,22 @@ export class ReceptionsService {
     return this.http.get<Reception[]>(`${DB_LINK}${RECEPTIONS_LINK}`);
   }
 
-  public createReception(body: any): Observable<Reception> {
-    const { date, patientName, complaints, doctorId } = body;
-    return this.http.post<Reception>(`${DB_LINK}${RECEPTIONS_LINK}`, {
-      date: date,
-      patientName: patientName,
-      complaints: complaints,
-      doctorId: doctorId,
-    });
+  // public createReception(body: any): Observable<Reception> {
+  //   const { date, patientName, complaints, doctorId } = body;
+  //   return this.http.post<Reception>(`${DB_LINK}${RECEPTIONS_LINK}`, {
+  //     date: date,
+  //     patientName: patientName,
+  //     complaints: complaints,
+  //     doctorId: doctorId,
+  //   });
+  // }
+  public createReception(body: Reception): Observable<Reception> {
+    return this.http.post<Reception>(`${DB_LINK}${RECEPTIONS_LINK}`, body);
   }
 
-  public deleteReception(body: any): Observable<Reception> {
-    const { id } = body;
+  public deleteReception(receptionId: number): Observable<Reception> {
     return this.http.delete<Reception>(`${DB_LINK}${RECEPTIONS_LINK}`, {
-      body: { id: id },
+      params: { id: receptionId },
     });
   }
 }
