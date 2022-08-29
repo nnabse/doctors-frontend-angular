@@ -9,6 +9,7 @@
       "@material/*": ["src/app/material/*"],
       "@interfaces/*": ["src/app/interfaces/*"],
       "@services/*": ["src/app/services/*"],
+      "@interceptors/*": ["src/app/interceptors/*"],
       "@guards/*": ["src/app/guards/*"],
       "@constants/*": ["src/app/constants/*"],
       "@enums/*": ["src/app/enums/*"]

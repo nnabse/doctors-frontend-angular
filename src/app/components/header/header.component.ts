@@ -9,6 +9,7 @@ import { Routes, PagesName } from '@enums/auth.enums';
 })
 export class HeaderComponent implements OnInit {
   public title = '';
+  public isMainPage = false;
 
   constructor(private router: Router) {}
 
@@ -18,18 +19,29 @@ export class HeaderComponent implements OnInit {
         switch (event.url) {
           case Routes.SIGN_IN:
             this.title = PagesName.SIGN_IN;
+            this.isMainPage = false;
             break;
           case Routes.SIGN_UP:
             this.title = PagesName.SIGN_UP;
+            this.isMainPage = false;
             break;
           case Routes.MAIN:
             this.title = PagesName.MAIN;
+            this.isMainPage = true;
             break;
           default:
             this.title = PagesName.MAIN;
+            this.isMainPage = true;
             break;
         }
       }
     });
+  }
+
+  public logout() {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    this.router.navigate(['/signIn']);
+    return;
   }
 }

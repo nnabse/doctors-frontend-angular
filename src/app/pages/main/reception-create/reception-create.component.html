@@ -1,0 +1,47 @@
+<div class="reception_create_content">
+  <div class="reception_create_form">
+    <div class="inputs">
+      <form [formGroup]="createReceptionForm">
+        <mat-form-field class="input" appearance="fill">
+          <mat-label>Your name</mat-label>
+          <input matInput type="text" formControlName="patientName" />
+        </mat-form-field>
+        <mat-form-field class="input" appearance="fill">
+          <mat-label>Doctor</mat-label>
+          <mat-select formControlName="doctor">
+            <mat-option *ngFor="let doctor of doctorsList" [value]="doctor.id">
+              {{ doctor.fullName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="input" appearance="fill">
+          <mat-label>Choose a date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="date"
+            type="text"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="input" appearance="fill">
+          <mat-label>Complaints</mat-label>
+          <input matInput type="text" formControlName="complaints" />
+        </mat-form-field>
+        <div class="reception_form_submit">
+          <button
+            [disabled]="createReceptionForm.invalid"
+            mat-raised-button
+            (click)="createReception()"
+          >
+            Add
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

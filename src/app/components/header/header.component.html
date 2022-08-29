@@ -3,6 +3,13 @@
     <div class="header_logo">
       <img src="assets/icons/header-logo.svg" alt="header_logo" />
     </div>
-    <div class="header_title"><h1>{{title}}</h1></div>
+    <div class="header_title">
+      <h1>{{ title }}</h1>
+    </div>
+    <div *ngIf="isMainPage" class="header_logout_btn">
+      <button mat-raised-button color="primary" (click)="logout()">
+        LogOut
+      </button>
+    </div>
   </div>
 </div>

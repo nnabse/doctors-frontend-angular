@@ -1,19 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
 @import "variables";
 
-html,
+html {
+  margin: 0;
+  height: 100vh;
+}
 body {
-  height: 100%;
+  height: calc(100% - 100px);
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 .global_header {
-  height: 10%;
+  height: 100px;
   background-color: $header-color;
   box-shadow: 0 5px 20px $dark-color;
   h1 {
     padding: 0;
     margin: 0;
   }
+}
+
+.success-snackbar {
+  background: $snackbar-color-success;
+  color: $dark-color;
+}
+
+.error-snackbar {
+  background: $snackbar-color-error;
+  color: $dark-color;
 }
