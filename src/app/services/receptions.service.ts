@@ -21,15 +21,6 @@ export class ReceptionsService {
     return this.http.get<Reception[]>(`${DB_LINK}${RECEPTIONS_LINK}`);
   }
 
-  // public createReception(body: any): Observable<Reception> {
-  //   const { date, patientName, complaints, doctorId } = body;
-  //   return this.http.post<Reception>(`${DB_LINK}${RECEPTIONS_LINK}`, {
-  //     date: date,
-  //     patientName: patientName,
-  //     complaints: complaints,
-  //     doctorId: doctorId,
-  //   });
-  // }
   public createReception(body: Reception): Observable<Reception> {
     return this.http.post<Reception>(`${DB_LINK}${RECEPTIONS_LINK}`, body);
   }
