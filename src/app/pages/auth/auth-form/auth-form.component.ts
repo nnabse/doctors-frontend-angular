@@ -92,11 +92,10 @@ export class AuthFormComponent implements OnChanges {
         .register(this.authForm.value)
         .pipe(
           catchError((err) => {
-            if (!err.status) {
-              this.snack.openErrorSnackBar('DB connection error!');
-              return of(null);
-            }
-            this.snack.openErrorSnackBar(err.error.message);
+            const errMsg = !err.status
+              ? 'DB connection error!'
+              : err.error.message;
+            this.snack.openErrorSnackBar(errMsg);
             return of(null);
           })
         )
@@ -115,12 +114,10 @@ export class AuthFormComponent implements OnChanges {
       .login(this.authForm.value)
       .pipe(
         catchError((err) => {
-          if (!err.status) {
-            this.snack.openErrorSnackBar('DB connection error!');
-            return of(null);
-          }
-          this.snack.openErrorSnackBar(err.error);
-
+          const errMsg = !err.status
+            ? 'DB connection error!'
+            : err.error.message;
+          this.snack.openErrorSnackBar(errMsg);
           return of(null);
         })
       )

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { Doctor } from '@interfaces/doctors.interface';
 
@@ -11,9 +11,7 @@ import { DB_LINK, DOCTORS_LINK } from '@constants/db-links.constants';
   providedIn: 'root',
 })
 export class DoctorsService {
-  public doctorsList$: BehaviorSubject<Doctor[]> = new BehaviorSubject<
-    Doctor[]
-  >([]);
+  public doctorsList$: Doctor[] | [] = [];
 
   constructor(private http: HttpClient) {}
 

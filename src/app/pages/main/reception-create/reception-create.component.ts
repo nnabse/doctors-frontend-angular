@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { catchError, of, Subscription } from 'rxjs';
+import { catchError, of } from 'rxjs';
 
 import { Doctor } from '@interfaces/doctors.interface';
 
@@ -14,15 +14,13 @@ import { Reception } from '@interfaces/reception.interface';
   templateUrl: './reception-create.component.html',
   styleUrls: ['./reception-create.component.scss'],
 })
-export class ReceptionCreateComponent implements OnInit, OnDestroy {
+export class ReceptionCreateComponent implements OnInit {
   private nameValue = '';
   private date: Date | undefined;
   private complaints = '';
   private doctorId = 0;
 
   public doctorsList: Doctor[] | [] = [];
-  private subscription = new Subscription();
-
   constructor(
     private receptionsService: ReceptionsService,
     private doctorService: DoctorsService,
@@ -56,11 +54,10 @@ export class ReceptionCreateComponent implements OnInit, OnDestroy {
       })
       .pipe(
         catchError((err) => {
-          if (!err.status) {
-            this.snack.openErrorSnackBar('DB connection error!');
-            return of(null);
-          }
-          this.snack.openErrorSnackBar(err.error.message);
+          const errMsg = !err.status
+            ? 'DB connection error!'
+            : err.error.message;
+          this.snack.openErrorSnackBar(errMsg);
           return of(null);
         })
       )
@@ -68,10 +65,14 @@ export class ReceptionCreateComponent implements OnInit, OnDestroy {
         if (!result) {
           return;
         }
+        console.log(result);
         result.doctor = {};
-        result.doctor = this.doctorService.doctorsList$.value.find(
-          (doctor) => result.doctorId === doctor.id
+        result.doctor = this.doctorService.doctorsList$.find(
+          (doctor) => this.doctorId === doctor.id
         );
+        console.log(this.doctorId);
+        console.log(result);
+
         this.snack.openSnackBar('Success');
         this.receptionsService.receptionsList$.next([
           ...this.receptionsService.receptionsList$.value,
@@ -85,11 +86,10 @@ export class ReceptionCreateComponent implements OnInit, OnDestroy {
       .getDoctorList()
       .pipe(
         catchError((err: any) => {
-          if (!err.status) {
-            this.snack.openErrorSnackBar('DB connection error!');
-            return of(null);
-          }
-          this.snack.openErrorSnackBar(err.error.message);
+          const errMsg = !err.status
+            ? 'DB connection error!'
+            : err.error.message;
+          this.snack.openErrorSnackBar(errMsg);
           return of(null);
         })
       )
@@ -97,15 +97,8 @@ export class ReceptionCreateComponent implements OnInit, OnDestroy {
         if (!data) {
           return;
         }
-        this.doctorService.doctorsList$.next(data);
+        this.doctorService.doctorsList$ = data;
+        this.doctorsList = this.doctorService.doctorsList$;
       });
-
-    this.subscription = this.doctorService.doctorsList$.subscribe((data) => {
-      this.doctorsList = data;
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
   }
 }

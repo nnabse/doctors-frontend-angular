@@ -32,11 +32,10 @@ export class ReceptionsListComponent implements OnInit, OnDestroy {
       .getReceptionsList()
       .pipe(
         catchError((err) => {
-          if (!err.status) {
-            this.snack.openErrorSnackBar('DB connection error!');
-            return of(null);
-          }
-          this.snack.openErrorSnackBar(err.error.message);
+          const errMsg = !err.status
+            ? 'DB connection error!'
+            : err.error.message;
+          this.snack.openErrorSnackBar(errMsg);
           return of(null);
         })
       )
@@ -61,11 +60,10 @@ export class ReceptionsListComponent implements OnInit, OnDestroy {
       })
       .pipe(
         catchError((err) => {
-          if (!err.status) {
-            this.snack.openErrorSnackBar('DB connection error!');
-            return of(null);
-          }
-          this.snack.openErrorSnackBar(err.error.message);
+          const errMsg = !err.status
+            ? 'DB connection error!'
+            : err.error.message;
+          this.snack.openErrorSnackBar(errMsg);
           return of(null);
         })
       )
