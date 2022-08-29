@@ -1,10 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Doctor } from '@interfaces/doctors.interface';
-import { DoctorsService } from '@services/doctors.service';
+import { catchError, of, Subscription } from 'rxjs';
 
+import { Doctor } from '@interfaces/doctors.interface';
+
+import { DoctorsService } from '@services/doctors.service';
 import { ReceptionsService } from '@services/receptions.service';
-import { Subscription } from 'rxjs';
+import { SnackbarService } from '@services/notifications/snackbar.service';
+import { Reception } from '@interfaces/reception.interface';
 
 @Component({
   selector: 'app-reception-create',
@@ -12,18 +15,18 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./reception-create.component.scss'],
 })
 export class ReceptionCreateComponent implements OnInit, OnDestroy {
-  private subscription = new Subscription();
-
   private nameValue = '';
   private date: Date | undefined;
   private complaints = '';
   private doctorId = 0;
 
-  public doctorsList: Doctor[] = [];
+  public doctorsList: Doctor[] | [] = [];
+  private subscription = new Subscription();
 
   constructor(
     private receptionsService: ReceptionsService,
-    private doctorService: DoctorsService
+    private doctorService: DoctorsService,
+    private snack: SnackbarService
   ) {}
 
   public createReceptionForm: FormGroup = new FormGroup({
@@ -44,18 +47,61 @@ export class ReceptionCreateComponent implements OnInit, OnDestroy {
     this.getValues();
     const formatDate = this.date?.toLocaleDateString('en-CA');
 
-    this.receptionsService.createReception({
-      patientName: this.nameValue,
-      doctorId: this.doctorId,
-      date: formatDate,
-      complaints: this.complaints,
-    });
+    this.receptionsService
+      .createReception({
+        patientName: this.nameValue,
+        doctorId: this.doctorId,
+        date: formatDate,
+        complaints: this.complaints,
+      })
+      .pipe(
+        catchError((err) => {
+          if (!err.status) {
+            this.snack.openErrorSnackBar('DB connection error!');
+            return of(null);
+          }
+          this.snack.openErrorSnackBar(err.error.message);
+          return of(null);
+        })
+      )
+      .subscribe((result: Reception | null) => {
+        if (!result) {
+          return;
+        }
+        result.doctor = {};
+        result.doctor = this.doctorService.doctorsList$.value.find(
+          (doctor) => result.doctorId === doctor.id
+        );
+        this.snack.openSnackBar('Success');
+        this.receptionsService.receptionsList$.next([
+          ...this.receptionsService.receptionsList$.value,
+          result,
+        ]);
+      });
   }
 
   ngOnInit(): void {
-    this.doctorService.getDoctorsList();
+    this.doctorService
+      .getDoctorList()
+      .pipe(
+        catchError((err: any) => {
+          if (!err.status) {
+            this.snack.openErrorSnackBar('DB connection error!');
+            return of(null);
+          }
+          this.snack.openErrorSnackBar(err.error.message);
+          return of(null);
+        })
+      )
+      .subscribe((data: Doctor[] | null) => {
+        if (!data) {
+          return;
+        }
+        this.doctorService.doctorsList$.next(data);
+      });
+
     this.subscription = this.doctorService.doctorsList$.subscribe((data) => {
-      this.doctorsList = data || [];
+      this.doctorsList = data;
     });
   }
 

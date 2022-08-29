@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
-import { DOCTORS_LINK } from '@constants/db-links.constants';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { Doctor } from '@interfaces/doctors.interface';
 
-import { HttpDoctorsHelperService } from '@services/http-doctors-helper.service';
-import { SnackbarService } from '@services/notifications/snackbar.service';
+import { DB_LINK, DOCTORS_LINK } from '@constants/db-links.constants';
 
 @Injectable({
   providedIn: 'root',
@@ -16,28 +15,9 @@ export class DoctorsService {
     Doctor[]
   >([]);
 
-  constructor(
-    private httpDoctorsHelper: HttpDoctorsHelperService,
-    private snack: SnackbarService
-  ) {}
+  constructor(private http: HttpClient) {}
 
-  public getDoctorsList(): void {
-    this.httpDoctorsHelper
-      .getDoctors<Doctor[]>(DOCTORS_LINK)
-      .pipe(
-        catchError((err) => {
-          if (err.status === 0) {
-            this.snack.openErrorSnackBar('DB connection error!');
-            return of(null);
-          }
-          this.snack.openErrorSnackBar(err.error);
-          return of(null);
-        })
-      )
-      .subscribe((result: Doctor[] | null) => {
-        if (result) {
-          this.doctorsList$.next(result);
-        }
-      });
+  public getDoctorList(): Observable<Doctor[]> {
+    return this.http.get<Doctor[]>(`${DB_LINK}${DOCTORS_LINK}`);
   }
 }

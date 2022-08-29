@@ -24,7 +24,7 @@ import { HeaderComponent } from '@components/header/header.component';
 import { AuthGuard } from '@guards/auth.guard';
 import { ExitMainGuard } from '@guards/exit-main.guard';
 
-import { RequestsInterceptor } from '@interceptors/requests.interceptor';
+import { RequestsInterceptor } from '@interceptors/token.interceptor';
 
 @NgModule({
   declarations: [

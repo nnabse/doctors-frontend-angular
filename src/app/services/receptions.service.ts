@@ -1,14 +1,11 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { RECEPTIONS_LINK } from '@constants/db-links.constants';
+import { DB_LINK, RECEPTIONS_LINK } from '@constants/db-links.constants';
 
 import { Reception } from '@interfaces/reception.interface';
 
-import { BehaviorSubject, catchError, of } from 'rxjs';
-import { DoctorsService } from './doctors.service';
-
-import { HttpReceptionsHelperService } from './http-receptions-helper.service';
-import { SnackbarService } from './notifications/snackbar.service';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -18,79 +15,26 @@ export class ReceptionsService {
     Reception[]
   >([]);
 
-  constructor(
-    private httpReceptionsHelper: HttpReceptionsHelperService,
-    private doctorService: DoctorsService,
-    private snack: SnackbarService
-  ) {}
+  constructor(private http: HttpClient) {}
 
-  public getReceptionsList(): void {
-    this.httpReceptionsHelper
-      .getReceptions<Reception[]>(RECEPTIONS_LINK)
-      .pipe(
-        catchError((err) => {
-          if (err.status === 0) {
-            this.snack.openErrorSnackBar('DB connection error!');
-            return of(null);
-          }
-          this.snack.openErrorSnackBar(err.error.message);
-          return of(null);
-        })
-      )
-      .subscribe((result: Reception[] | null) => {
-        if (result) {
-          this.receptionsList$.next(result);
-        }
-      });
+  public getReceptionsList(): Observable<Reception[]> {
+    return this.http.get<Reception[]>(`${DB_LINK}${RECEPTIONS_LINK}`);
   }
 
-  public createReception(body: any): void {
-    this.httpReceptionsHelper
-      .createReceptions<Reception>(RECEPTIONS_LINK, body)
-      .pipe(
-        catchError((err) => {
-          if (err.status === 0) {
-            this.snack.openErrorSnackBar('DB connection error!');
-            return of(null);
-          }
-          this.snack.openErrorSnackBar(err.error.message);
-          return of(null);
-        })
-      )
-      .subscribe((result: Reception | null) => {
-        if (result) {
-          result.doctor = {};
-          result.doctor = this.doctorService.doctorsList$.value.find(
-            (doctor) => result.doctorId === doctor.id
-          );
-          this.snack.openSnackBar('Success');
-          this.receptionsList$.next([...this.receptionsList$.value, result]);
-          return result;
-        }
-        return;
-      });
+  public createReception(body: any): Observable<Reception> {
+    const { date, patientName, complaints, doctorId } = body;
+    return this.http.post<Reception>(`${DB_LINK}${RECEPTIONS_LINK}`, {
+      date: date,
+      patientName: patientName,
+      complaints: complaints,
+      doctorId: doctorId,
+    });
   }
 
-  public deleteReception(body: any): void {
-    this.httpReceptionsHelper
-      .deleteReception<Reception>(RECEPTIONS_LINK, body)
-      .pipe(
-        catchError((err) => {
-          if (err.status === 0) {
-            this.snack.openErrorSnackBar('DB connection error!');
-            return of(null);
-          }
-          this.snack.openErrorSnackBar(err.error.message);
-          return of(null);
-        })
-      )
-      .subscribe((result: Reception | null) => {
-        if (result) {
-          this.snack.openSnackBar('Reception successfully deleted!');
-          this.receptionsList$.next(
-            this.receptionsList$.value.filter((elem) => body.id !== elem.id)
-          );
-        }
-      });
+  public deleteReception(body: any): Observable<Reception> {
+    const { id } = body;
+    return this.http.delete<Reception>(`${DB_LINK}${RECEPTIONS_LINK}`, {
+      body: { id: id },
+    });
   }
 }

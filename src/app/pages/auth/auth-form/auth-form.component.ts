@@ -7,16 +7,22 @@ import {
   Input,
 } from '@angular/core';
 
-import { AuthService } from '@services/auth.service';
-
-import { PagesName } from '@enums/auth.enums';
-
 import {
   FormGroup,
   FormControl,
   Validators,
   AbstractControl,
 } from '@angular/forms';
+
+import { catchError, of } from 'rxjs';
+import { Router } from '@angular/router';
+
+import { AuthService } from '@services/auth.service';
+import { SnackbarService } from '@services/notifications/snackbar.service';
+
+import { Auth } from '@interfaces/user.interface';
+
+import { PagesName } from '@enums/auth.enums';
 
 @Component({
   selector: 'app-auth-form',
@@ -82,10 +88,51 @@ export class AuthFormComponent implements OnChanges {
 
   public buttonFunction(): void {
     if (this.formType === PagesName.SIGN_UP) {
-      this.authService.register(this.authForm.value);
+      this.authService
+        .register(this.authForm.value)
+        .pipe(
+          catchError((err) => {
+            if (!err.status) {
+              this.snack.openErrorSnackBar('DB connection error!');
+              return of(null);
+            }
+            this.snack.openErrorSnackBar(err.error.message);
+            return of(null);
+          })
+        )
+        .subscribe((result: Auth | null) => {
+          if (!result) {
+            return;
+          }
+          this.snack.openSnackBar('Success registration!');
+          localStorage.setItem('accessToken', result.accessToken);
+          localStorage.setItem('refreshToken', result.refreshToken);
+          this.router.navigate(['/main']);
+        });
       return;
     }
-    this.authService.login(this.authForm.value);
+    this.authService
+      .login(this.authForm.value)
+      .pipe(
+        catchError((err) => {
+          if (!err.status) {
+            this.snack.openErrorSnackBar('DB connection error!');
+            return of(null);
+          }
+          this.snack.openErrorSnackBar(err.error);
+
+          return of(null);
+        })
+      )
+      .subscribe((result: Auth | null) => {
+        if (!result) {
+          return;
+        }
+        this.snack.openSnackBar(`Welcome, ${result.username}!`);
+        localStorage.setItem('accessToken', result.accessToken);
+        localStorage.setItem('refreshToken', result.refreshToken);
+        this.router.navigate(['/main']);
+      });
   }
 
   public showPasswordToggle(): void {
@@ -128,5 +175,9 @@ export class AuthFormComponent implements OnChanges {
   public link = '';
   public redirectBtnText = '';
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private snack: SnackbarService
+  ) {}
 }
