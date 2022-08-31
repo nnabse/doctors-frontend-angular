@@ -18,6 +18,7 @@ import { AuthFormComponent } from '@pages/auth/auth-form/auth-form.component';
 import { MainComponent } from '@pages/main/main.component';
 import { ReceptionCreateComponent } from '@pages/main/reception-create/reception-create.component';
 import { ReceptionsListComponent } from '@pages/main/receptions-list/receptions-list.component';
+import { SortingComponent } from '@pages/main/receptions-list/sorting/sorting.component';
 
 import { HeaderComponent } from '@components/header/header.component';
 
@@ -39,6 +40,7 @@ import { RenameDialogComponent } from '@components/rename-dialog/rename-dialog.c
     ReceptionsListComponent,
     DeleteDialogComponent,
     RenameDialogComponent,
+    SortingComponent,
   ],
   imports: [
     BrowserModule,

@@ -30,7 +30,21 @@
         </mat-form-field>
         <mat-form-field class="input" appearance="fill">
           <mat-label>Complaints</mat-label>
-          <input matInput type="text" formControlName="complaints" />
+          <input
+            matInput
+            #complaints
+            type="text"
+            formControlName="complaints"
+          />
+          <button
+            *ngIf="complaints.value"
+            mat-icon-button
+            matSuffix
+            aria-label="Clear"
+            (click)="createReceptionForm.controls['complaints'].setValue('')"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
         </mat-form-field>
         <div class="reception_form_submit">
           <button

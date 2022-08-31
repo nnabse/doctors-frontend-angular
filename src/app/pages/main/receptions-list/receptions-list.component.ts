@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteDialogComponent } from '@components/delete-dialog/delete-dialog.component';
 import { RenameDialogComponent } from '@components/rename-dialog/rename-dialog.component';
@@ -31,19 +32,6 @@ export class ReceptionsListComponent implements OnInit, OnDestroy {
     'complaints',
     'actions',
   ];
-
-  public sortingOptions: string[] = [
-    'Clear',
-    'Name',
-    'Doctor',
-    'Date',
-    'Complaints',
-  ];
-
-  public sortDirections: string[] = ['Increasing', 'Decreasing'];
-
-  public sortMethod = '';
-  public isDateFiltering = false;
 
   ngOnInit(): void {
     this.receptionsService

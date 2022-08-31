@@ -1,0 +1,86 @@
+<div class="receptions_sorting">
+  <div class="sort_by">
+    <form [formGroup]="sortForm">
+      <mat-form-field appearance="fill">
+        <mat-label>Sort By:</mat-label>
+        <mat-select formControlName="sortingOption">
+          <mat-option
+            *ngFor="let option of sortingOptions; let i = index"
+            [value]="option.value"
+          >
+            {{ option.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field
+        *ngIf="sortForm.get('sortingOption')?.value"
+        appearance="fill"
+        class="sort_direction"
+      >
+        <mat-label>Sort Direction:</mat-label>
+        <mat-select formControlName="sortMethod">
+          <mat-option
+            *ngFor="let direction of sortDirections; let i = index"
+            [value]="direction.value"
+          >
+            {{ direction.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div class="submit_sorting">
+        <button
+          mat-raised-button
+          [disabled]="sortForm.invalid"
+          (click)="submitSort()"
+        >
+          Sort
+        </button>
+      </div>
+    </form>
+  </div>
+  <form [formGroup]="filterForm">
+    <div *ngIf="!isDateFiltering" class="date_filter_btn">
+      <h2>Add date filter</h2>
+      <img
+        src="assets/icons/date-filter-icon.svg"
+        alt="plus icon"
+        (click)="toggleDateFiltering()"
+      />
+    </div>
+    <div *ngIf="isDateFiltering" class="date_filter">
+      <div class="date_filter_inputs">
+        <mat-form-field appearance="fill">
+          <mat-label class="date_filter">Enter a date range</mat-label>
+          <mat-date-range-input [rangePicker]="rangePicker">
+            <input
+              matStartDate
+              placeholder="Start date"
+              formControlName="start"
+            />
+            <input matEndDate placeholder="End date" formControlName="end" />
+          </mat-date-range-input>
+          <mat-datepicker-toggle matSuffix [for]="rangePicker">
+          </mat-datepicker-toggle>
+          <mat-date-range-picker #rangePicker #input>
+            <mat-date-range-picker-actions>
+              <button mat-button matDateRangePickerCancel>Cancel</button>
+              <button mat-raised-button color="primary" matDateRangePickerApply>
+                Apply
+              </button>
+            </mat-date-range-picker-actions>
+          </mat-date-range-picker>
+        </mat-form-field>
+        <mat-icon (click)="toggleDateFiltering()">delete</mat-icon>
+      </div>
+      <div class="submit_filtering">
+        <button
+          mat-raised-button
+          [disabled]="filterForm.invalid"
+          (click)="submitSort()"
+        >
+          filter
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

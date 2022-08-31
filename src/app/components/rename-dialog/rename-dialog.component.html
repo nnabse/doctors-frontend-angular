@@ -25,7 +25,16 @@
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Complaints</mat-label>
-    <input matInput formControlName="complaints" type="text" />
+    <input matInput #complaints formControlName="complaints" type="text" />
+    <button
+      *ngIf="complaints.value"
+      mat-icon-button
+      matSuffix
+      aria-label="Clear"
+      (click)="renameForm.controls['complaints'].setValue('')"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
   </mat-form-field>
 </form>
 <div mat-dialog-actions>
@@ -34,6 +43,7 @@
     mat-button
     [mat-dialog-close]="true"
     cdkFocusInitial
+    [disabled]="renameForm.invalid"
     (click)="renameReception()"
   >
     Ok
