@@ -1,4 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteDialogComponent } from '@components/delete-dialog/delete-dialog.component';
+import { RenameDialogComponent } from '@components/rename-dialog/rename-dialog.component';
+
 import { Reception } from '@interfaces/reception.interface';
 import { SnackbarService } from '@services/notifications/snackbar.service';
 
@@ -16,7 +20,8 @@ export class ReceptionsListComponent implements OnInit, OnDestroy {
 
   constructor(
     private receptionsService: ReceptionsService,
-    private snack: SnackbarService
+    private snack: SnackbarService,
+    private dialog: MatDialog
   ) {}
 
   displayedColumns: string[] = [
@@ -26,6 +31,19 @@ export class ReceptionsListComponent implements OnInit, OnDestroy {
     'complaints',
     'actions',
   ];
+
+  public sortingOptions: string[] = [
+    'Clear',
+    'Name',
+    'Doctor',
+    'Date',
+    'Complaints',
+  ];
+
+  public sortDirections: string[] = ['Increasing', 'Decreasing'];
+
+  public sortMethod = '';
+  public isDateFiltering = false;
 
   ngOnInit(): void {
     this.receptionsService
@@ -51,6 +69,25 @@ export class ReceptionsListComponent implements OnInit, OnDestroy {
         this.receptionsList = data;
       }
     );
+  }
+
+  public openDeleteDialog(id: number): void {
+    this.dialog
+      .open(DeleteDialogComponent)
+      .afterClosed()
+      .subscribe((answ) => {
+        if (!answ) {
+          return;
+        }
+        this.deleteReception(id);
+      });
+  }
+
+  public openRenameDialog(reception: Reception): void {
+    this.dialog.open(RenameDialogComponent, {
+      width: '45%',
+      data: { ...reception },
+    });
   }
 
   public deleteReception(id: number): void {

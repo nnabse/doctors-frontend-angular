@@ -1,4 +1,59 @@
 <div class="receptions_list_content">
+  <div *ngIf="receptionsList.length" class="receptions_sorting">
+    <div class="sort_by">
+      <mat-form-field appearance="fill">
+        <mat-label>Sort By:</mat-label>
+        <mat-select [(value)]="sortMethod">
+          <mat-option
+            *ngFor="let option of sortingOptions; let i = index"
+            [value]="option"
+          >
+            {{ option }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="sortMethod" appearance="fill" class="sort_direction">
+        <mat-label>Sort Direction:</mat-label>
+        <mat-select>
+          <mat-option
+            *ngFor="let direction of sortDirections; let i = index"
+            [value]="direction"
+          >
+            {{ direction }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div *ngIf="!isDateFiltering" class="date_filter_btn">
+      <h2>Add date filter</h2>
+      <img
+        src="assets/icons/date-filter-icon.svg"
+        alt="plus icon"
+        (click)="isDateFiltering = true"
+      />
+    </div>
+    <div *ngIf="isDateFiltering" class="date_filter_inputs">
+      <mat-form-field appearance="fill">
+        <mat-label>Enter a date range</mat-label>
+        <mat-date-range-input [rangePicker]="rangePicker">
+          <input matStartDate placeholder="Start date" />
+          <input matEndDate placeholder="End date" />
+        </mat-date-range-input>
+        <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="rangePicker">
+        </mat-datepicker-toggle>
+        <mat-date-range-picker #rangePicker>
+          <mat-date-range-picker-actions>
+            <button mat-button matDateRangePickerCancel>Cancel</button>
+            <button mat-raised-button color="primary" matDateRangePickerApply>
+              Apply
+            </button>
+          </mat-date-range-picker-actions>
+        </mat-date-range-picker>
+      </mat-form-field>
+      <mat-icon (click)="isDateFiltering = !isDateFiltering">delete</mat-icon>
+    </div>
+  </div>
   <div *ngIf="receptionsList.length" class="receptions_table">
     <table mat-table [dataSource]="receptionsList" class="mat-elevation-z8">
       <ng-container matColumnDef="patientName">
@@ -15,7 +70,9 @@
 
       <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef>Date</th>
-        <td mat-cell *matCellDef="let element">{{ element.date }}</td>
+        <td mat-cell *matCellDef="let element">
+          {{ element.date | date: "yyyy-MM-dd" }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="complaints">
@@ -28,8 +85,8 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let element">
-          <mat-icon (click)="deleteReception(element.id)">delete</mat-icon
-          ><mat-icon>edit</mat-icon>
+          <mat-icon (click)="openDeleteDialog(element.id)">delete</mat-icon
+          ><mat-icon (click)="openRenameDialog(element)">edit</mat-icon>
         </td>
       </ng-container>
 

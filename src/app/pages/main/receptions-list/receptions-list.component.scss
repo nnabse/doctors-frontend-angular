@@ -1,11 +1,35 @@
-.receptions_list_content{
-  margin-top: 5px;
+.receptions_list_content {
+  margin-top: 30px;
+  .receptions_sorting {
+    height: 100px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 50px;
+    .date_filter_btn {
+      display: flex;
+      gap: 10px;
+      img {
+        width: 30px;
+        height: 30px;
+      }
+    }
+    .date_filter_inputs {
+      mat-icon {
+        margin-left: 15px;
+      }
+    }
+    .sort_direction {
+      margin-left: 30px;
+    }
+  }
   .empty_table_text {
     display: flex;
     justify-content: center;
   }
 }
 .receptions_table {
+  margin-top: 30px;
   display: flex;
   justify-content: center;
   table {

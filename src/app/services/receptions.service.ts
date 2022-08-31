@@ -30,4 +30,13 @@ export class ReceptionsService {
       params: { id: receptionId },
     });
   }
+
+  public renameReception(
+    receptionId: number,
+    body: Reception
+  ): Observable<Reception> {
+    return this.http.patch<Reception>(`${DB_LINK}${RECEPTIONS_LINK}`, body, {
+      params: { id: receptionId },
+    });
+  }
 }
