@@ -25,6 +25,8 @@ import { AuthGuard } from '@guards/auth.guard';
 import { ExitMainGuard } from '@guards/exit-main.guard';
 
 import { RequestsInterceptor } from '@interceptors/token.interceptor';
+import { DeleteDialogComponent } from '@components/delete-dialog/delete-dialog.component';
+import { RenameDialogComponent } from '@components/rename-dialog/rename-dialog.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import { RequestsInterceptor } from '@interceptors/token.interceptor';
     AuthComponent,
     ReceptionCreateComponent,
     ReceptionsListComponent,
+    DeleteDialogComponent,
+    RenameDialogComponent,
   ],
   imports: [
     BrowserModule,
