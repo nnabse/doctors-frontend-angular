@@ -4,6 +4,12 @@
     display: flex;
     justify-content: center;
   }
+  .table {
+    table-layout: fixed;
+    .table_td {
+      overflow-wrap: break-word;
+    }
+  }
 }
 .receptions_table {
   margin-top: 30px;

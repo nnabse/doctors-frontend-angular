@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { catchError, of } from 'rxjs';
+import { catchError } from 'rxjs';
 
 import { SnackbarService } from '@services/notifications/snackbar.service';
 import { ReceptionsService } from '@services/receptions.service';
@@ -37,8 +37,8 @@ export class SortingComponent {
   ) {}
 
   public sortForm: FormGroup = new FormGroup({
-    sortingOption: new FormControl('', Validators.required),
-    sortMethod: new FormControl('', Validators.required),
+    sortingOption: new FormControl('date', Validators.required),
+    sortMethod: new FormControl('asc', Validators.required),
   });
 
   public filterForm: FormGroup = new FormGroup({
@@ -46,10 +46,13 @@ export class SortingComponent {
     end: new FormControl('', Validators.required),
   });
 
-  public toggleDateFiltering() {
+  public toggleDateFiltering(flag: boolean) {
     this.filterForm.get('start')?.setValue('');
     this.filterForm.get('end')?.setValue('');
-    this.isDateFiltering = !this.isDateFiltering;
+    this.isDateFiltering = flag;
+    if (!flag) {
+      this.submitSort();
+    }
   }
 
   public submitSort(): void {
@@ -72,15 +75,7 @@ export class SortingComponent {
         { sortOption, sortMethod },
         { startDate: formatStart, endDate: formatEnd }
       )
-      .pipe(
-        catchError((err) => {
-          const errMsg = !err.status
-            ? 'DB connection error!'
-            : err.error.message;
-          this.snack.openErrorSnackBar(errMsg);
-          return of(null);
-        })
-      )
+      .pipe(catchError((err) => this.snack.openErrorSnackBar(err)))
       .subscribe((result: Reception[] | null) => {
         if (!result) {
           return;

@@ -1,10 +1,12 @@
 <div class="receptions_list_content">
-    <app-sorting *ngIf="receptionsList.length"></app-sorting>
+  <app-sorting></app-sorting>
   <div *ngIf="receptionsList.length" class="receptions_table">
-    <table mat-table [dataSource]="receptionsList" class="mat-elevation-z8">
+    <table mat-table [dataSource]="receptionsList" class="table">
       <ng-container matColumnDef="patientName">
         <th mat-header-cell *matHeaderCellDef>Name</th>
-        <td mat-cell *matCellDef="let element">{{ element.patientName }}</td>
+        <td class="table_td" mat-cell *matCellDef="let element">
+          {{ element.patientName }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="doctor">
@@ -23,7 +25,7 @@
 
       <ng-container matColumnDef="complaints">
         <th mat-header-cell *matHeaderCellDef>Complaints</th>
-        <td mat-cell *matCellDef="let element">
+        <td class="table_td" mat-cell *matCellDef="let element">
           {{ element.complaints }}
         </td>
       </ng-container>

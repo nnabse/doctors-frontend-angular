@@ -22,20 +22,12 @@
           <mat-option
             *ngFor="let direction of sortDirections; let i = index"
             [value]="direction.value"
+            (click)="submitSort()"
           >
             {{ direction.name }}
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <div class="submit_sorting">
-        <button
-          mat-raised-button
-          [disabled]="sortForm.invalid"
-          (click)="submitSort()"
-        >
-          Sort
-        </button>
-      </div>
     </form>
   </div>
   <form [formGroup]="filterForm">
@@ -44,7 +36,7 @@
       <img
         src="assets/icons/date-filter-icon.svg"
         alt="plus icon"
-        (click)="toggleDateFiltering()"
+        (click)="toggleDateFiltering(true)"
       />
     </div>
     <div *ngIf="isDateFiltering" class="date_filter">
@@ -64,22 +56,18 @@
           <mat-date-range-picker #rangePicker #input>
             <mat-date-range-picker-actions>
               <button mat-button matDateRangePickerCancel>Cancel</button>
-              <button mat-raised-button color="primary" matDateRangePickerApply>
+              <button
+                mat-raised-button
+                color="primary"
+                matDateRangePickerApply
+                (click)="submitSort()"
+              >
                 Apply
               </button>
             </mat-date-range-picker-actions>
           </mat-date-range-picker>
         </mat-form-field>
-        <mat-icon (click)="toggleDateFiltering()">delete</mat-icon>
-      </div>
-      <div class="submit_filtering">
-        <button
-          mat-raised-button
-          [disabled]="filterForm.invalid"
-          (click)="submitSort()"
-        >
-          filter
-        </button>
+        <mat-icon (click)="toggleDateFiltering(false)">delete</mat-icon>
       </div>
     </div>
   </form>

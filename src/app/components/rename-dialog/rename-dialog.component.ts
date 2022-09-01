@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { catchError, of } from 'rxjs';
+import { catchError } from 'rxjs';
 
 import { Doctor } from '@interfaces/doctors.interface';
 import { Reception } from '@interfaces/reception.interface';
@@ -19,6 +19,7 @@ import { ReceptionsService } from '@services/receptions.service';
 export class RenameDialogComponent implements OnInit {
   public doctorsList: Doctor[] = [];
   public renameForm: FormGroup;
+  public minDate = new Date();
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: Reception,
@@ -52,15 +53,7 @@ export class RenameDialogComponent implements OnInit {
 
     this.receptionsService
       .renameReception(id, updatedReception)
-      .pipe(
-        catchError((err) => {
-          const errMsg = !err.status
-            ? 'DB connection error!'
-            : err.error.message;
-          this.snack.openErrorSnackBar(errMsg);
-          return of(null);
-        })
-      )
+      .pipe(catchError((err) => this.snack.openErrorSnackBar(err)))
       .subscribe((result) => {
         if (!result) {
           return;
@@ -81,15 +74,7 @@ export class RenameDialogComponent implements OnInit {
   ngOnInit(): void {
     this.doctorService
       .getDoctorList()
-      .pipe(
-        catchError((err: any) => {
-          const errMsg = !err.status
-            ? 'DB connection error!'
-            : err.error.message;
-          this.snack.openErrorSnackBar(errMsg);
-          return of(null);
-        })
-      )
+      .pipe(catchError((err) => this.snack.openErrorSnackBar(err)))
       .subscribe((data: Doctor[] | null) => {
         if (!data) {
           return;

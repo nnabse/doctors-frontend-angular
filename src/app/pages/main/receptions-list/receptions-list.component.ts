@@ -8,7 +8,7 @@ import { Reception } from '@interfaces/reception.interface';
 import { SnackbarService } from '@services/notifications/snackbar.service';
 
 import { ReceptionsService } from '@services/receptions.service';
-import { catchError, of, Subscription } from 'rxjs';
+import { catchError, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-receptions-list',
@@ -36,15 +36,7 @@ export class ReceptionsListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.receptionsService
       .getReceptionsList()
-      .pipe(
-        catchError((err) => {
-          const errMsg = !err.status
-            ? 'DB connection error!'
-            : err.error.message;
-          this.snack.openErrorSnackBar(errMsg);
-          return of(null);
-        })
-      )
+      .pipe(catchError((err) => this.snack.openErrorSnackBar(err)))
       .subscribe((data: Reception[] | null) => {
         if (!data) {
           return;
@@ -81,15 +73,7 @@ export class ReceptionsListComponent implements OnInit, OnDestroy {
   public deleteReception(id: number): void {
     this.receptionsService
       .deleteReception(id)
-      .pipe(
-        catchError((err) => {
-          const errMsg = !err.status
-            ? 'DB connection error!'
-            : err.error.message;
-          this.snack.openErrorSnackBar(errMsg);
-          return of(null);
-        })
-      )
+      .pipe(catchError((err) => this.snack.openErrorSnackBar(err)))
       .subscribe((data: Reception | null) => {
         if (!data) {
           return;
