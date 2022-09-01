@@ -17,7 +17,7 @@ import { ReceptionsService } from '@services/receptions.service';
   styleUrls: ['./rename-dialog.component.scss'],
 })
 export class RenameDialogComponent implements OnInit {
-  public doctorsList: Doctor[] | [] = [];
+  public doctorsList: Doctor[] = [];
   public renameForm: FormGroup;
 
   constructor(
