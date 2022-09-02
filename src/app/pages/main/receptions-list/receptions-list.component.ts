@@ -1,9 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteDialogComponent } from '@components/delete-dialog/delete-dialog.component';
+import { ChangeReceptionDialogComponent } from '@components/change-reception-dialog/change-reception-dialog.component';
+
 import { Reception } from '@interfaces/reception.interface';
 import { SnackbarService } from '@services/notifications/snackbar.service';
 
 import { ReceptionsService } from '@services/receptions.service';
-import { catchError, of, Subscription } from 'rxjs';
+import { catchError, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-receptions-list',
@@ -16,7 +21,8 @@ export class ReceptionsListComponent implements OnInit, OnDestroy {
 
   constructor(
     private receptionsService: ReceptionsService,
-    private snack: SnackbarService
+    private snack: SnackbarService,
+    private dialog: MatDialog
   ) {}
 
   displayedColumns: string[] = [
@@ -30,15 +36,7 @@ export class ReceptionsListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.receptionsService
       .getReceptionsList()
-      .pipe(
-        catchError((err) => {
-          const errMsg = !err.status
-            ? 'DB connection error!'
-            : err.error.message;
-          this.snack.openErrorSnackBar(errMsg);
-          return of(null);
-        })
-      )
+      .pipe(catchError((err) => this.snack.openErrorSnackBar(err)))
       .subscribe((data: Reception[] | null) => {
         if (!data) {
           return;
@@ -53,18 +51,29 @@ export class ReceptionsListComponent implements OnInit, OnDestroy {
     );
   }
 
+  public openDeleteDialog(id: number): void {
+    this.dialog
+      .open(DeleteDialogComponent)
+      .afterClosed()
+      .subscribe((answ) => {
+        if (!answ) {
+          return;
+        }
+        this.deleteReception(id);
+      });
+  }
+
+  public openRenameDialog(reception: Reception): void {
+    this.dialog.open(ChangeReceptionDialogComponent, {
+      width: '45%',
+      data: { ...reception },
+    });
+  }
+
   public deleteReception(id: number): void {
     this.receptionsService
       .deleteReception(id)
-      .pipe(
-        catchError((err) => {
-          const errMsg = !err.status
-            ? 'DB connection error!'
-            : err.error.message;
-          this.snack.openErrorSnackBar(errMsg);
-          return of(null);
-        })
-      )
+      .pipe(catchError((err) => this.snack.openErrorSnackBar(err)))
       .subscribe((data: Reception | null) => {
         if (!data) {
           return;

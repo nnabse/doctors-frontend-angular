@@ -1,9 +1,12 @@
 <div class="receptions_list_content">
+  <app-sorting></app-sorting>
   <div *ngIf="receptionsList.length" class="receptions_table">
-    <table mat-table [dataSource]="receptionsList" class="mat-elevation-z8">
+    <table mat-table [dataSource]="receptionsList" class="table">
       <ng-container matColumnDef="patientName">
         <th mat-header-cell *matHeaderCellDef>Name</th>
-        <td mat-cell *matCellDef="let element">{{ element.patientName }}</td>
+        <td class="table_td" mat-cell *matCellDef="let element">
+          {{ element.patientName }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="doctor">
@@ -15,12 +18,14 @@
 
       <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef>Date</th>
-        <td mat-cell *matCellDef="let element">{{ element.date }}</td>
+        <td mat-cell *matCellDef="let element">
+          {{ element.date | date: "yyyy-MM-dd" }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="complaints">
         <th mat-header-cell *matHeaderCellDef>Complaints</th>
-        <td mat-cell *matCellDef="let element">
+        <td class="table_td" mat-cell *matCellDef="let element">
           {{ element.complaints }}
         </td>
       </ng-container>
@@ -28,8 +33,8 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let element">
-          <mat-icon (click)="deleteReception(element.id)">delete</mat-icon
-          ><mat-icon>edit</mat-icon>
+          <mat-icon (click)="openDeleteDialog(element.id)">delete</mat-icon
+          ><mat-icon (click)="openRenameDialog(element)">edit</mat-icon>
         </td>
       </ng-container>
 

@@ -14,7 +14,7 @@ import {
   AbstractControl,
 } from '@angular/forms';
 
-import { catchError, of } from 'rxjs';
+import { catchError } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { AuthService } from '@services/auth.service';
@@ -90,15 +90,7 @@ export class AuthFormComponent implements OnChanges {
     if (this.formType === PagesName.SIGN_UP) {
       this.authService
         .register(this.authForm.value)
-        .pipe(
-          catchError((err) => {
-            const errMsg = !err.status
-              ? 'DB connection error!'
-              : err.error.message;
-            this.snack.openErrorSnackBar(errMsg);
-            return of(null);
-          })
-        )
+        .pipe(catchError((err) => this.snack.openErrorSnackBar(err)))
         .subscribe((result: Auth | null) => {
           if (!result) {
             return;
@@ -112,15 +104,7 @@ export class AuthFormComponent implements OnChanges {
     }
     this.authService
       .login(this.authForm.value)
-      .pipe(
-        catchError((err) => {
-          const errMsg = !err.status
-            ? 'DB connection error!'
-            : err.error.message;
-          this.snack.openErrorSnackBar(errMsg);
-          return of(null);
-        })
-      )
+      .pipe(catchError((err) => this.snack.openErrorSnackBar(err)))
       .subscribe((result: Auth | null) => {
         if (!result) {
           return;

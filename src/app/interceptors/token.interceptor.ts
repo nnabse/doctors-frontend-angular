@@ -8,6 +8,7 @@ import {
 import { Observable } from 'rxjs';
 
 import { AuthService } from '@services/auth.service';
+import { UPDATE_TOKENS_LINK } from '@constants/db-links.constants';
 
 @Injectable()
 export class RequestsInterceptor implements HttpInterceptor {
@@ -18,7 +19,7 @@ export class RequestsInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     const tokens = this.authService.getTokens();
 
-    if (req.url.includes('User')) {
+    if (req.url.includes('User') || req.url.includes(UPDATE_TOKENS_LINK)) {
       return next.handle(req);
     }
 

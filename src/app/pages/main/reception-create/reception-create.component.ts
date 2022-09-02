@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { catchError, of } from 'rxjs';
+import { catchError } from 'rxjs';
 
 import { Doctor } from '@interfaces/doctors.interface';
 
@@ -19,6 +19,8 @@ export class ReceptionCreateComponent implements OnInit {
   private date: Date | undefined;
   private complaints = '';
   private doctorId = 0;
+
+  public minDate = new Date();
 
   public doctorsList: Doctor[] | [] = [];
   constructor(
@@ -52,15 +54,7 @@ export class ReceptionCreateComponent implements OnInit {
         date: formatDate,
         complaints: this.complaints,
       })
-      .pipe(
-        catchError((err) => {
-          const errMsg = !err.status
-            ? 'DB connection error!'
-            : err.error.message;
-          this.snack.openErrorSnackBar(errMsg);
-          return of(null);
-        })
-      )
+      .pipe(catchError((err) => this.snack.openErrorSnackBar(err)))
       .subscribe((result: Reception | null) => {
         if (!result) {
           return;
@@ -80,15 +74,7 @@ export class ReceptionCreateComponent implements OnInit {
   ngOnInit(): void {
     this.doctorService
       .getDoctorList()
-      .pipe(
-        catchError((err: any) => {
-          const errMsg = !err.status
-            ? 'DB connection error!'
-            : err.error.message;
-          this.snack.openErrorSnackBar(errMsg);
-          return of(null);
-        })
-      )
+      .pipe(catchError((err) => this.snack.openErrorSnackBar(err)))
       .subscribe((data: Doctor[] | null) => {
         if (!data) {
           return;

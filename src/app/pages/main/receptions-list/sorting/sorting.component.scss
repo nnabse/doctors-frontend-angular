@@ -1,0 +1,35 @@
+.receptions_sorting {
+  height: 150px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  .sort_by {
+    .submit_sorting {
+      display: flex;
+      justify-content: center;
+    }
+  }
+  gap: 50px;
+  .date_filter_btn {
+    display: flex;
+    gap: 10px;
+    img {
+      width: 30px;
+      height: 30px;
+    }
+  }
+  .date_filter {
+    display: flex;
+    mat-icon {
+      margin-left: 15px;
+    }
+    .submit_filtering {
+      display: flex;
+      margin: 0 0 15px 15px;
+      align-items: center;
+    }
+  }
+  .sort_direction {
+    margin-left: 30px;
+  }
+}
