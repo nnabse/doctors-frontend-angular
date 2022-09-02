@@ -13,10 +13,10 @@ import { ReceptionsService } from '@services/receptions.service';
 
 @Component({
   selector: 'app-rename-dialog',
-  templateUrl: './rename-dialog.component.html',
-  styleUrls: ['./rename-dialog.component.scss'],
+  templateUrl: './change-reception-dialog.component.html',
+  styleUrls: ['./change-reception-dialog.component.scss'],
 })
-export class RenameDialogComponent implements OnInit {
+export class ChangeReceptionDialogComponent implements OnInit {
   public doctorsList: Doctor[] = [];
   public renameForm: FormGroup;
   public minDate = new Date();

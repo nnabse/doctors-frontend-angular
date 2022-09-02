@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteDialogComponent } from '@components/delete-dialog/delete-dialog.component';
-import { RenameDialogComponent } from '@components/rename-dialog/rename-dialog.component';
+import { ChangeReceptionDialogComponent } from '@components/change-reception-dialog/change-reception-dialog.component';
 
 import { Reception } from '@interfaces/reception.interface';
 import { SnackbarService } from '@services/notifications/snackbar.service';
@@ -64,7 +64,7 @@ export class ReceptionsListComponent implements OnInit, OnDestroy {
   }
 
   public openRenameDialog(reception: Reception): void {
-    this.dialog.open(RenameDialogComponent, {
+    this.dialog.open(ChangeReceptionDialogComponent, {
       width: '45%',
       data: { ...reception },
     });

@@ -27,7 +27,7 @@ import { ExitMainGuard } from '@guards/exit-main.guard';
 
 import { RequestsInterceptor } from '@interceptors/token.interceptor';
 import { DeleteDialogComponent } from '@components/delete-dialog/delete-dialog.component';
-import { RenameDialogComponent } from '@components/rename-dialog/rename-dialog.component';
+import { ChangeReceptionDialogComponent } from '@components/change-reception-dialog/change-reception-dialog.component';
 import { RefreshTokensInterceptor } from '@interceptors/refresh-tokens.interceptor';
 
 @NgModule({
@@ -40,7 +40,7 @@ import { RefreshTokensInterceptor } from '@interceptors/refresh-tokens.intercept
     ReceptionCreateComponent,
     ReceptionsListComponent,
     DeleteDialogComponent,
-    RenameDialogComponent,
+    ChangeReceptionDialogComponent,
     SortingComponent,
   ],
   imports: [
