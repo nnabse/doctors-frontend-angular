@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { catchError } from 'rxjs';
+import { catchError, take } from 'rxjs';
 
 import { SnackbarService } from '@services/notifications/snackbar.service';
 import { ReceptionsService } from '@services/receptions.service';
@@ -13,7 +13,7 @@ import { Reception } from '@interfaces/reception.interface';
   templateUrl: './sorting.component.html',
   styleUrls: ['./sorting.component.scss'],
 })
-export class SortingComponent {
+export class SortingComponent implements OnInit {
   public isDateFiltering = false;
 
   private start: Date | undefined;
@@ -36,6 +36,10 @@ export class SortingComponent {
     private snack: SnackbarService
   ) {}
 
+  ngOnInit(): void {
+    this.sortForm.valueChanges.pipe(take(1)).subscribe();
+  }
+
   public sortForm: FormGroup = new FormGroup({
     sortingOption: new FormControl('date', Validators.required),
     sortMethod: new FormControl('asc', Validators.required),
@@ -47,8 +51,7 @@ export class SortingComponent {
   });
 
   public toggleDateFiltering(flag: boolean) {
-    this.filterForm.get('start')?.setValue('');
-    this.filterForm.get('end')?.setValue('');
+    this.filterForm.reset();
     this.isDateFiltering = flag;
     if (!flag) {
       this.submitSort();

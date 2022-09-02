@@ -28,6 +28,7 @@ import { ExitMainGuard } from '@guards/exit-main.guard';
 import { RequestsInterceptor } from '@interceptors/token.interceptor';
 import { DeleteDialogComponent } from '@components/delete-dialog/delete-dialog.component';
 import { RenameDialogComponent } from '@components/rename-dialog/rename-dialog.component';
+import { RefreshTokensInterceptor } from '@interceptors/refresh-tokens.interceptor';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,11 @@ import { RenameDialogComponent } from '@components/rename-dialog/rename-dialog.c
     AuthGuard,
     ExitMainGuard,
     { provide: HTTP_INTERCEPTORS, useClass: RequestsInterceptor, multi: true },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: RefreshTokensInterceptor,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })

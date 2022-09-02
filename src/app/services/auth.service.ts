@@ -5,6 +5,7 @@ import {
   CREATE_USER_LINK,
   DB_LINK,
   LOGIN_USER_LINK,
+  UPDATE_TOKENS_LINK,
 } from '@constants/db-links.constants';
 
 import { Auth, User } from '@interfaces/user.interface';
@@ -29,5 +30,17 @@ export class AuthService {
 
   public login(body: User): Observable<Auth> {
     return this.http.post<Auth>(`${DB_LINK}${LOGIN_USER_LINK}`, body);
+  }
+
+  public refresh(): Observable<Auth> {
+    const tokens = this.getTokens();
+
+    return this.http.post<Auth>(
+      `${DB_LINK}${UPDATE_TOKENS_LINK}`,
+      {},
+      {
+        headers: { refreshToken: tokens.refreshtoken },
+      }
+    );
   }
 }
