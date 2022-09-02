@@ -1,11 +1,18 @@
-.receptions_list_content{
-  margin-top: 5px;
+.receptions_list_content {
+  margin-top: 30px;
   .empty_table_text {
     display: flex;
     justify-content: center;
   }
+  .table {
+    table-layout: fixed;
+    .table_td {
+      overflow-wrap: break-word;
+    }
+  }
 }
 .receptions_table {
+  margin-top: 30px;
   display: flex;
   justify-content: center;
   table {

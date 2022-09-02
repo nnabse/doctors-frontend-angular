@@ -18,6 +18,7 @@ import { AuthFormComponent } from '@pages/auth/auth-form/auth-form.component';
 import { MainComponent } from '@pages/main/main.component';
 import { ReceptionCreateComponent } from '@pages/main/reception-create/reception-create.component';
 import { ReceptionsListComponent } from '@pages/main/receptions-list/receptions-list.component';
+import { SortingComponent } from '@pages/main/receptions-list/sorting/sorting.component';
 
 import { HeaderComponent } from '@components/header/header.component';
 
@@ -25,6 +26,8 @@ import { AuthGuard } from '@guards/auth.guard';
 import { ExitMainGuard } from '@guards/exit-main.guard';
 
 import { RequestsInterceptor } from '@interceptors/token.interceptor';
+import { DeleteDialogComponent } from '@components/delete-dialog/delete-dialog.component';
+import { RenameDialogComponent } from '@components/rename-dialog/rename-dialog.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +38,9 @@ import { RequestsInterceptor } from '@interceptors/token.interceptor';
     AuthComponent,
     ReceptionCreateComponent,
     ReceptionsListComponent,
+    DeleteDialogComponent,
+    RenameDialogComponent,
+    SortingComponent,
   ],
   imports: [
     BrowserModule,
