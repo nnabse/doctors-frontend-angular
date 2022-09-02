@@ -10,24 +10,11 @@ import {
 import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
 
 import { Auth } from '@interfaces/user.interface';
-import { DB_LINK, UPDATE_TOKENS_LINK } from '@constants/db-links.constants';
 import { AuthService } from '@services/auth.service';
 
 @Injectable()
 export class RefreshTokensInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService) {}
-
-  sendRefreshToken(origRequest: HttpRequest<any>) {
-    const tokens = this.authService.getTokens();
-
-    const changedRequest = origRequest.clone({
-      url: `${DB_LINK}${UPDATE_TOKENS_LINK}`,
-      method: 'POST',
-      headers: origRequest.headers.set('refreshToken', tokens.refreshtoken),
-    });
-
-    return changedRequest;
-  }
 
   intercept(
     request: HttpRequest<unknown>,
